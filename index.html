@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ankit PDF Pro - All-in-One PDF Solutions</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">📄</span>
+                <span class="logo-text">Ankit PDF Pro</span>
+            </div>
+            <div class="nav-links">
+                <button id="theme-toggle" class="theme-btn" onclick="toggleTheme()">
+                    <span class="theme-icon">🌙</span>
+                    <span class="theme-text">Dark Mode</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>All-in-One PDF Toolkit</h1>
+            <p>Convert, merge, split, compress, rotate, and protect your PDFs instantly — fast, secure, and completely free. No installation required.</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        
+        <!-- Tool Cards Grid -->
+        <div class="tools-grid">
+            
+            <!-- 1. Text to PDF -->
+            <div class="tool-card" id="card-text-pdf">
+                <div class="card-icon">📝</div>
+                <h3>Text to PDF</h3>
+                <p>Convert plain text to PDF document instantly</p>
+                <div class="upload-area">
+                    <textarea id="text-input" placeholder="Enter your text here..."></textarea>
+                    <button class="action-btn" onclick="textToPDF()">Convert to PDF</button>
+                </div>
+            </div>
+
+            <!-- 2. Image to PDF -->
+            <div class="tool-card" id="card-image-pdf">
+                <div class="card-icon">🖼️</div>
+                <h3>Image to PDF</h3>
+                <p>Convert JPG or PNG images to PDF</p>
+                <div class="upload-area" id="drop-image" ondrop="handleDrop(event, 'image')" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                    <div class="drop-zone">
+                        <span class="drop-icon">📁</span>
+                        <span class="drop-text">Drag & Drop Images Here</span>
+                        <span class="drop-or">OR</span>
+                        <input type="file" id="image-input" accept="image/*" multiple onchange="handleImageSelect(this)">
+                        <label for="image-input" class="browse-btn">Browse Files</label>
+                    </div>
+                    <div class="file-info" id="image-info"></div>
+                    <button class="action-btn" onclick="imageToPDF()">Convert to PDF</button>
+                </div>
+            </div>
+
+            <!-- 3. Merge PDF -->
+            <div class="tool-card" id="card-merge-pdf">
+                <div class="card-icon">🔗</div>
+                <h3>Merge PDFs</h3>
+                <p>Combine multiple PDF files into one</p>
+                <div class="upload-area" id="drop-merge" ondrop="handleDrop(event, 'merge')" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                    <div class="drop-zone">
+                        <span class="drop-icon">📁</span>
+                        <span class="drop-text">Drag & Drop PDF Files Here</span>
+                        <span class="drop-or">OR</span>
+                        <input type="file" id="merge-input" accept=".pdf" multiple onchange="handleMergeSelect(this)">
+                        <label for="merge-input" class="browse-btn">Browse Files</label>
+                    </div>
+                    <div class="file-info" id="merge-info"></div>
+                    <button class="action-btn" onclick="mergePDFs()">Merge PDFs</button>
+                </div>
+            </div>
+
+            <!-- 4. Split PDF -->
+            <div class="tool-card" id="card-split-pdf">
+                <div class="card-icon">✂️</div>
+                <h3>Split PDF</h3>
+                <p>Extract specific pages from a PDF</p>
+                <div class="upload-area" id="drop-split" ondrop="handleDrop(event, 'split')" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                    <div class="drop-zone">
+                        <span class="drop-icon">📁</span>
+                        <span class="drop-text">Drag & Drop PDF File Here</span>
+                        <span class="drop-or">OR</span>
+                        <input type="file" id="split-input" accept=".pdf" onchange="handleSplitSelect(this)">
+                        <label for="split-input" class="browse-btn">Browse File</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="number" id="split-page" placeholder="Enter page number to extract" min="1">
+                    </div>
+                    <div class="file-info" id="split-info"></div>
+                    <button class="action-btn" onclick="splitPDF()">Split PDF</button>
+                </div>
+            </div>
+
+            <!-- 5. Add Watermark -->
+            <div class="tool-card" id="card-watermark">
+                <div class="card-icon">💧</div>
+                <h3>Add Watermark</h3>
+                <p>Add custom text watermark with full control</p>
+                <div class="upload-area" id="drop-watermark" ondrop="handleDrop(event, 'watermark')" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                    <div class="drop-zone">
+                        <span class="drop-icon">📁</span>
+                        <span class="drop-text">Drag & Drop PDF File Here</span>
+                        <span class="drop-or">OR</span>
+                        <input type="file" id="watermark-input" accept=".pdf" onchange="handleWatermarkSelect(this)">
+                        <label for="watermark-input" class="browse-btn">Browse File</label>
+                    </div>
+                    <div class="file-info" id="watermark-info"></div>
+                    
+                    <!-- Watermark Settings -->
+                    <div class="watermark-settings">
+                        <div class="input-group">
+                            <label>Watermark Text</label>
+                            <input type="text" id="watermark-text" placeholder="Enter watermark text" oninput="updateWatermarkPreview()">
+                        </div>
+                        
+                        <div class="settings-row">
+                            <div class="input-group half">
+                                <label>Color</label>
+                                <input type="color" id="watermark-color" value="#808080" onchange="updateWatermarkPreview()">
+                            </div>
+                            <div class="input-group half">
+                                <label>Opacity</label>
+                                <input type="range" id="watermark-opacity" min="0.1" max="1" step="0.1" value="0.5" onchange="updateWatermarkPreview()">
+                            </div>
+                        </div>
+                        
+                        <div class="settings-row">
+                            <div class="input-group half">
+                                <label>Size</label>
+                                <select id="watermark-size" onchange="updateWatermarkPreview()">
+                                    <option value="20">Small</option>
+                                    <option value="40" selected>Medium</option>
+                                    <option value="60">Large</option>
+                                    <option value="80">Extra Large</option>
+                                </select>
+                            </div>
+                            <div class="input-group half">
+                                <label>Rotation (0-360°)</label>
+                                <input type="number" id="watermark-rotation" min="0" max="360" value="45" oninput="updateWatermarkPreview()">
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Position</label>
+                            <select id="watermark-position" onchange="updateWatermarkPreview()">
+                                <option value="center" selected>Center</option>
+                                <option value="top-left">Top Left</option>
+                                <option value="top-right">Top Right</option>
+                                <option value="bottom-left">Bottom Left</option>
+                                <option value="bottom-right">Bottom Right</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Live Preview -->
+                        <div class="watermark-preview">
+                            <label>Live Preview</label>
+                            <div id="preview-container" class="preview-container">
+                                <span id="preview-watermark" class="preview-watermark">Sample Text</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="action-btn" onclick="addWatermark()">Apply Watermark</button>
+                </div>
+            </div>
+
+            <!-- 6. Rotate PDF -->
+            <div class="tool-card" id="card-rotate">
+                <div class="card-icon">🔄</div>
+                <h3>Rotate PDF</h3>
+                <p>Rotate PDF pages by 90°, 180°, or 270°</p>
+                <div class="upload-area" id="drop-rotate" ondrop="handleDrop(event, 'rotate')" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                    <div class="drop-zone">
+                        <span class="drop-icon">📁</span>
+                        <span class="drop-text">Drag & Drop PDF File Here</span>
+                        <span class="drop-or">OR</span>
+                        <input type="file" id="rotate-input" accept=".pdf" onchange="handleRotateSelect(this)">
+                        <label for="rotate-input" class="browse-btn">Browse File</label>
+                    </div>
+                    <div class="input-group">
+                        <select id="rotate-degree">
+                            <option value="90">Rotate 90° Clockwise</option>
+                            <option value="180">Rotate 180°</option>
+                            <option value="270">Rotate 270° Clockwise</option>
+                        </select>
+                    </div>
+                    <div class="file-info" id="rotate-info"></div>
+                    <button class="action-btn" onclick="rotatePDF()">Rotate PDF</button>
+                </div>
+            </div>
+
+            <!-- 7. Delete Page -->
+            <div class="tool-card" id="card-delete">
+                <div class="card-icon">🗑️</div>
+                <h3>Delete Page</h3>
+                <p>Remove specific pages from PDF</p>
+                <div class="upload-area" id="drop-delete" ondrop="handleDrop(event, 'delete')" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                    <div class="drop-zone">
+                        <span class="drop-icon">📁</span>
+                        <span class="drop-text">Drag & Drop PDF File Here</span>
+                        <span class="drop-or">OR</span>
+                        <input type="file" id="delete-input" accept=".pdf" onchange="handleDeleteSelect(this)">
+                        <label for="delete-input" class="browse-btn">Browse File</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="number" id="delete-page" placeholder="Enter page number to delete" min="1">
+                    </div>
+                    <div class="file-info" id="delete-info"></div>
+                    <button class="action-btn" onclick="deletePage()">Delete Page</button>
+                </div>
+            </div>
+
+            <!-- 8. Compress PDF -->
+            <div class="tool-card" id="card-compress">
+                <div class="card-icon">📦</div>
+                <h3>Compress PDF</h3>
+                <p>Reduce PDF file size</p>
+                <div class="upload-area" id="drop-compress" ondrop="handleDrop(event, 'compress')" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                    <div class="drop-zone">
+                        <span class="drop-icon">📁</span>
+                        <span class="drop-text">Drag & Drop PDF File Here</span>
+                        <span class="drop-or">OR</span>
+                        <input type="file" id="compress-input" accept=".pdf" onchange="handleCompressSelect(this)">
+                        <label for="compress-input" class="browse-btn">Browse File</label>
+                    </div>
+                    <div class="file-info" id="compress-info"></div>
+                    <button class="action-btn" onclick="compressPDF()">Compress PDF</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2024 Ankit PDF Pro. All rights reserved. | Made with ❤️</p>
+    </footer>
+
+    <!-- Custom JavaScript -->
+    <script src="js/script.js"></script>
+</body>
+</html>
