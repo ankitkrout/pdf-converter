@@ -1,0 +1,25 @@
+body {
+    font-family: Arial;
+    text-align: center;
+    background: #f4f4f4;
+}
+
+.dark {
+    background: #222;
+    color: white;
+}
+
+button {
+    margin: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+}
+
+textarea {
+    width: 80%;
+    height: 100px;
+}
+
+input {
+    margin: 5px;
+}
